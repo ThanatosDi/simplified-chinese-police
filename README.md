@@ -31,7 +31,7 @@ example: "{\\"稅\\": \\"稅\\"}"
 #### `include_dir` (optional)
 要掃描的程式資料夾，預設掃描 app/ 及 tests/ 兩個資料夾中的檔案
 #### `code-language` (necessary)
-欲掃描的程式碼語言，詳細請看支援語言
+欲掃描的程式碼語言，詳細請看 [支援語言 Support Language](#支援語言-support-language)
 
 ```yaml
 env:
@@ -51,13 +51,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-       - name: simplified-chinese-police
+      - name: simplified-chinese-police
         uses: actions/setup-python@v4
         working-directory: ${{ env.working-directory }}
         run: |
           git clone https://github.com/ThanatosDi/simplified-chinese-police.git simplified-chinese-police
-          pip install zhconv alive-progress
           cd simplified-chinese-police
+          pip install -r requirements.txt
           python main.py
           
           
