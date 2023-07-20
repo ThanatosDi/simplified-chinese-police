@@ -8,6 +8,7 @@
       - [`dictionary` (optional)](#dictionary-optional)
       - [`include_dir` (optional)](#include_dir-optional)
       - [`code-language` (necessary)](#code-language-necessary)
+- [Reference](#reference)
 
 
 # 簡體字警察 simplified-chinese-police
@@ -61,10 +62,8 @@ jobs:
           cd simplified-chinese-police
           pip install -r requirements.txt
           python main.py
-          
-          
-
-      
-
 
 ```
+
+# Reference
+[支語警察 PTT鄉民百科](https://pttpedia.fandom.com/zh/wiki/%E6%94%AF%E8%AA%9E%E8%AD%A6%E5%AF%9F)
