@@ -1,3 +1,5 @@
+![image](https://github.com/ThanatosDi/simplified-chinese-police/assets/12424898/9fa162c8-a1f4-4e4e-a319-0576a69839ac)
+
 - [簡體字警察 simplified-chinese-police](#簡體字警察-simplified-chinese-police)
 - [支援語言 Support Language](#支援語言-support-language)
 - [使用 Use](#使用-use)
