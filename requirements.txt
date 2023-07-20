@@ -1,0 +1,4 @@
+about-time==4.2.1 ; python_version >= "3.10" and python_version < "4"
+alive-progress==3.1.4 ; python_version >= "3.10" and python_version < "4"
+grapheme==0.6.0 ; python_version >= "3.10" and python_version < "4"
+zhconv==1.4.3 ; python_version >= "3.10" and python_version < "4.0"
