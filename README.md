@@ -1,13 +1,11 @@
-![image](https://github.com/ThanatosDi/simplified-chinese-police/assets/12424898/9fa162c8-a1f4-4e4e-a319-0576a69839ac)
-
 - [簡體字警察 simplified-chinese-police](#簡體字警察-simplified-chinese-police)
 - [支援語言 Support Language](#支援語言-support-language)
 - [使用 Use](#使用-use)
-  - [env 設定](#env-設定)
-      - [`root-path` (optional)](#root-path-optional)
-      - [`dictionary` (optional)](#dictionary-optional)
-      - [`include_dir` (optional)](#include_dir-optional)
+  - [with 設定](#with-設定)
+      - [`code-path` (necessary)](#code-path-necessary)
       - [`code-language` (necessary)](#code-language-necessary)
+      - [`scan-dir` (optional)](#scan-dir-optional)
+      - [`custom-dictionary` (necessary)](#custom-dictionary-necessary)
 - [Reference](#reference)
 
 
@@ -25,25 +23,20 @@
 | Python | ➖    |
 
 # 使用 Use
-## env 設定
-#### `root-path` (optional)
-要掃描的專案根目錄與本程式相對位置預設 ../
-#### `dictionary` (optional)
-自定義字典，除了本專案自有的字典之外額外增加自定義字典，可避免中文的異體字影響  
-example: "{\\"稅\\": \\"稅\\"}"
-#### `include_dir` (optional)
-要掃描的程式資料夾，預設掃描 app/ 及 tests/ 兩個資料夾中的檔案
+## with 設定
+#### `code-path` (necessary)
+要掃描的專案根目錄與本程式相對位置，預設 ./
 #### `code-language` (necessary)
 欲掃描的程式碼語言，詳細請看 [支援語言 Support Language](#支援語言-support-language)
+#### `scan-dir` (optional)
+要掃描的程式資料夾，預設掃描 app/ 及 tests/ 兩個資料夾中的檔案
+#### `custom-dictionary` (optional)
+自定義字典，除了本專案自有的字典之外額外增加自定義字典，可避免中文的異體字影響  
+example: "{'稅': '稅'}"
+
+
 
 ```yaml
-env:
-  working-directory: ${{ github.workspace }}/task-1.16.0
-  # simplified-chinese-police args.
-  root-path: ../
-  dictionary: "{\"客\": \"客\"}"
-  include_dir: app, tests
-  code-language: php
 
 jobs:
   simplified-chinese-police:
@@ -55,15 +48,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: simplified-chinese-police
-        uses: actions/setup-python@v4
-        working-directory: ${{ env.working-directory }}
-        run: |
-          git clone https://github.com/ThanatosDi/simplified-chinese-police.git simplified-chinese-police
-          cd simplified-chinese-police
-          pip install -r requirements.txt
-          python main.py
+        uses: ThanatosDi/simplified-chinese-police@main
+        with:
+          code-path: './example-code-path'
+          code-language: php
+          scan-dir: app, tests
+          custom-dictionary: "{'只': '只'}"
 
 ```
-
-# Reference
-[支語警察 PTT鄉民百科](https://pttpedia.fandom.com/zh/wiki/%E6%94%AF%E8%AA%9E%E8%AD%A6%E5%AF%9F)
