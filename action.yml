@@ -1,0 +1,60 @@
+name: 'Simplified Chinese Police'
+description: 'Check if the comments in the code are in Simplified Chinese'
+inputs:
+  code-path:
+    description: 'Point to the path of your applications code on your host.'
+    required: true
+    default: './'
+  code-language:
+    description: 'Enter scan code language.'
+    required: true
+    default: 'php'
+  scan-dir:
+    description: 'Scan dir.'
+    required: true
+    default: 'app, tests'
+  custom-dictionary:
+    description: 'Enter custom chinese word dictionary.'
+    required: false
+    default: ''
+
+outputs:
+  code-path:
+    description: 'Show code-path.'
+    value: ${{ inputs.code-path }}
+  code-language:
+    description: 'Show scan code language.'
+    value: ${{ inputs.code-language }}
+  scan-dir:
+    description: 'Show scan-dir.'
+    value: ${{ inputs.scan-dir }}
+  custom-dictionary:
+    description: 'Show custom-dictionary.'
+    value: ${{ inputs.custom-dictionary }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Pass Inputs to Shell
+      shell: bash
+      run: |
+        echo "code-path=${{ inputs.code-path }}" >> $GITHUB_ENV
+        echo "code-language=${{ inputs.code-language }}" >> $GITHUB_ENV
+        echo "scan-dir=${{ inputs.scan-dir }}" >> $GITHUB_ENV
+        echo "custom-dictionary=${{ inputs.custom-dictionary }}" >> $GITHUB_ENV
+        echo "GITHUB-ACTION-PATH=$GITHUB_ACTION_PATH" >> $GITHUB_ENV
+
+    - name: Install Python Packages
+      shell: bash
+      run: pip3 install -r $GITHUB_ACTION_PATH/requirements.txt
+
+
+    - name: Scan code
+      shell: bash
+      run: python $GITHUB_ACTION_PATH/main.py
+
