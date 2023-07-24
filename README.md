@@ -20,7 +20,8 @@
 | 語言   | 支援 |
 | ------ | ---- |
 | PHP    | ✅    |
-| Python | ➖    |
+| Python | ✅    |
+| Swift | ✅    |
 
 # 使用 Use
 ## with 設定
