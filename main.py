@@ -7,6 +7,7 @@ from alive_progress import alive_it
 
 from modules.php import PHP
 from modules.python import Python
+from modules.swift import Swift
 
 GITHUB_ACTION_PATH = os.environ.get('GITHUB-ACTION-PATH')
 
@@ -42,6 +43,8 @@ def main():
             files = PHP().files(path=CODE_PATH, include_dir=SCAN_DIR)
         case 'python':
             files = Python().files(path=CODE_PATH, include_dir=SCAN_DIR)
+        case 'swift':
+            files = Swift().files(path=CODE_PATH, include_dir=SCAN_DIR)
         case _:
             raise ValueError(f'Not support this language: {CODE_LANGUAGE}')
 
@@ -51,6 +54,8 @@ def main():
                 comments = PHP().comments(file)
             case 'python':
                 comments = Python().comments(file)
+            case 'swift':
+                comments = Swift().comments(file)
             case _:
                 raise ValueError('Not support this language')
         for comment in comments:
