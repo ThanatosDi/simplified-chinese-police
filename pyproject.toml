@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "github-action-test"
+name = "simplified-chinese-police"
 version = "0.1.0"
 description = ""
 authors = ["ThanatosDi <yykkold55tw@gmail.com>"]
 readme = "README.md"
-packages = [{include = "github_action_test"}]
+packages = [{include = "simplified-chinese-police"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
