@@ -6,8 +6,7 @@ import zhconv
 from alive_progress import alive_it
 
 from modules.php import PHP
-
-# from modules.python import Python
+from modules.python import Python
 
 GITHUB_ACTION_PATH = os.environ.get('GITHUB-ACTION-PATH')
 
@@ -36,14 +35,22 @@ def main():
     CUSTOM_DICTIONARY = json.loads(os.environ.get(
         'custom-dictionary', "{}").replace('\'', '"'))
     ERROR_COMMENTS = []
-
-    files = PHP().files(path=CODE_PATH, include_dir=SCAN_DIR)
     comments = []
+
+    match(CODE_LANGUAGE.lower()):
+        case 'php':
+            files = PHP().files(path=CODE_PATH, include_dir=SCAN_DIR)
+        case 'python':
+            files = Python().files(path=CODE_PATH, include_dir=SCAN_DIR)
+        case _:
+            raise ValueError(f'Not support this language: {CODE_LANGUAGE}')
+
     for file in alive_it(files):
         match(CODE_LANGUAGE.lower()):
             case 'php':
                 comments = PHP().comments(file)
-            # TODO: Python 語言的實現
+            case 'python':
+                comments = Python().comments(file)
             case _:
                 raise ValueError('Not support this language')
         for comment in comments:

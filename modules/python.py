@@ -4,16 +4,16 @@ import re
 from .languageABC import LanguageABC
 
 
-class PHP(LanguageABC):
-    PHP_BLOCK_COMMENT = re.compile(r'/\*\*.+?\*/', re.DOTALL)
-    PHP_ONE_LINE_COMMENT = re.compile(r"//.*")
+class Python(LanguageABC):
+    PYTHON_BLOCK_COMMENT = re.compile(r'([\'\"])\1\1(.*?)\1{3}', re.DOTALL)
+    PYTHON_ONE_LINE_COMMENT = re.compile(r"#.*")
 
     def __init__(self): ...
 
     def ignore_files(self, path: str) -> list:
         return super().ignore_files(path)
 
-    def files(self, path: str, include_dir: list = ['tests', 'app']) -> list:
+    def files(self, path: str, include_dir: list = ['tests', 'app']):
         """取得所有 PHP 檔案
 
         Args:
@@ -28,7 +28,7 @@ class PHP(LanguageABC):
         for dir in include_dir:
             for root, _, filenames in os.walk(os.path.join(path, dir)):
                 for filename in filenames:
-                    if filename.endswith('.php') and filename not in ignore:
+                    if filename.endswith('.py') and filename not in ignore:
                         files.append(os.path.join(root, filename))
         return files
 
@@ -36,8 +36,8 @@ class PHP(LanguageABC):
         comment = []
         with open(file, 'r', encoding='utf-8') as f:
             content = f.read()
-        block_comments = re.findall(self.PHP_BLOCK_COMMENT, content)
+        block_comments = re.findall(self.PYTHON_BLOCK_COMMENT, content)
         for block_comment in block_comments:
-            comment += block_comment.split('\n')
-        one_line_comments = re.findall(self.PHP_ONE_LINE_COMMENT, content)
-        return comment + one_line_comments
+            comment += ''.join(block_comment).split('\n')
+        one_line_comments = re.findall(self.PYTHON_ONE_LINE_COMMENT, content)
+        return list(filter(None, comment + one_line_comments))
