@@ -1,19 +1,17 @@
 import os
 import re
 
+from .languageABC import LanguageABC
 
-class PHP:
+
+class PHP(LanguageABC):
     PHP_BLOCK_COMMENT = re.compile(r'/\*\*.+?\*/', re.DOTALL)
     PHP_ONE_LINE_COMMENT = re.compile(r"//.*")
 
     def __init__(self): ...
 
-    def __ignore_files(self, path: str) -> list:
-        ignore_file_path = os.path.join(path, ".comment-ignore")
-        if not os.path.exists(ignore_file_path):
-            return []
-        with open(f'{ignore_file_path}', 'r', encoding='utf-8') as f:
-            return f.read().splitlines()
+    def ignore_files(self, path: str) -> list:
+        return super().ignore_files(path)
 
     def files(self, path: str, include_dir: list = ['tests', 'app']) -> list:
         """取得所有 PHP 檔案
@@ -25,7 +23,7 @@ class PHP:
         Returns:
             list: PHP 檔案清單
         """
-        ignore = self.__ignore_files(path)
+        ignore = self.ignore_files(path)
         files = []
         for dir in include_dir:
             for root, _, filenames in os.walk(os.path.join(path, dir)):
